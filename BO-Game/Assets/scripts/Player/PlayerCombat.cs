@@ -38,7 +38,5 @@ public class PlayerCombat: MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-
-        healthUpdate.UpdateUI(health);
     }
 }

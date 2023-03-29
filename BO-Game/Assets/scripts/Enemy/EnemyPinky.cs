@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,11 +17,13 @@ public class EnemyPinky : MonoBehaviour
     private AnimationState state;
 
     public int health = 100;
-    private float MovementSpeed = 12f;
+    private float MovementSpeed = 10f;
     public int Damage = 40;
     private bool isDead = false;
     [SerializeField] private bool FacingRight = true;
     private bool isAttacking;
+
+    [SerializeField] private PinkyThink ScuffedAILogic;
 
 
     // Start is called before the first frame update
@@ -34,6 +37,7 @@ public class EnemyPinky : MonoBehaviour
         {
             FacingRight = false;
         }
+        ScuffedAILogic = GetComponent<PinkyThink>();
 
     }
 
@@ -42,13 +46,8 @@ public class EnemyPinky : MonoBehaviour
     {
         if (!isDead)
         {
-            float dirX = Input.GetAxisRaw("Horizontal");
+            float dirX = ScuffedAILogic.PosRelativeToPlayer();
             rb.velocity = new Vector2(dirX * MovementSpeed, rb.velocity.y); // grounded movement
-
-            if (Input.GetKeyDown(KeyCode.M))
-            {
-                isAttacking = true;
-            }
 
             UpdateSprite(); // update sprite
         }
@@ -128,17 +127,24 @@ public class EnemyPinky : MonoBehaviour
 
     private void Bite()
     {
-        RaycastHit2D Hit = Physics2D.Raycast(FirePoint.position, FirePoint.right * 1f);
+        RaycastHit2D[] Hits =  new RaycastHit2D[2]; // only 1 object is able to be hit, array has 2 values because the raycast keeps hitting the fucking pinky
+        Hits = Physics2D.RaycastAll(FirePoint.position, FirePoint.right); // shoots raycast
+
         
-        Debug.DrawRay(FirePoint.position, FirePoint.right * 1, Color.green);
 
-        if (Hit.collider.CompareTag("Player"))
+        for (int i = 0; i < Hits.Length; i++)
         {
+            Debug.Log(Hits[i]);
 
-            PlayerCombat Player = Hit.transform.GetComponent<PlayerCombat>();
-            Player.TakeDamage(Damage);
+            if (Hits[i].collider.CompareTag("Player") && Hits[i].distance <= 0.5f) // checks if player is hit and in range
+            {
+
+                PlayerCombat Player = Hits[i].transform.GetComponent<PlayerCombat>();
+                Player.TakeDamage(Damage); // does damage to player, could probably be implemented better but who cares lmao
+                return; // related to isAttacking = false, this causes pinky to keep attacking if he hits you
+            }
+            
         }
-
-        isAttacking = false;
+        isAttacking = false; // stops attacking
     }
 }
