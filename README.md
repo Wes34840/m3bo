@@ -1,9 +1,10 @@
 # m3bo Changelog, I guess
 
+## 0.0.5
 
-## 0.0.3
-
-- tbh, this is the earliest version I pushed to github.
+- Fixed score so you don't get hundreds of thousands of points when killing one enemy
+- Added clicking sound when your gun is empty
+- Also changed this to have latest on the top for readability
 
 ## 0.0.4
 
@@ -13,3 +14,7 @@
 - Updated UI Font.
 - Made ammo, score and live counters for UI that kinda work.
 - Player is no longer immortal and can die.
+
+## 0.0.3
+
+- tbh, this is the earliest version I pushed to github.

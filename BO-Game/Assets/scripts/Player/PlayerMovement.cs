@@ -25,8 +25,9 @@ public class PlayerMovement : MonoBehaviour
     private float dirX;
     private float dirY;
     private bool isDead = false;
+    private float EmptySoundTimer = 0.3f;
 
-
+    private AudioSource source;
 
     private enum MovementState { idle, walking, firing, crouching, crouchWalk, crouchFiring, dying, coolerDying }
 
@@ -38,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         combatScript = GetComponent<PlayerCombat>();
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -66,7 +68,6 @@ public class PlayerMovement : MonoBehaviour
     }
     private void UpdateSprite()
     {
-
 
         MovementState state;
 
@@ -97,7 +98,14 @@ public class PlayerMovement : MonoBehaviour
             isCrouched = true;
             if (Input.GetButton("Fire1")) // firing while in crouched position
             {
-                state = MovementState.crouchFiring;
+                if (combatScript.ammo > 0)
+                { 
+                    state = MovementState.crouchFiring;
+                }
+                else
+                {
+                    PlayEmptyGunSound();
+                }
                  
             }
         }
@@ -105,9 +113,16 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.idle;
             isCrouched = false;
-            if (Input.GetButton("Fire1")) // play idle firing animation
+            if (Input.GetButton("Fire1")) 
             {
-                state = MovementState.firing;
+                if (combatScript.ammo > 0)
+                {
+                    state = MovementState.firing; // play idle firing animation
+                }
+                else
+                {
+                    PlayEmptyGunSound(); // play click sound effect, implying the gun is empty
+                }
             }
         }
 
@@ -129,6 +144,7 @@ public class PlayerMovement : MonoBehaviour
     {
         UpdateFirePoint.UpdatePosition(isCrouched);
     }
+
     private void Die()
     {
         isDead = true; // shitty way of preventing Update() from spamming the function over and over
@@ -144,4 +160,20 @@ public class PlayerMovement : MonoBehaviour
         }
         rb.constraints = RigidbodyConstraints2D.FreezePositionX; // freeze position on x axis
     }
+
+    private void PlayEmptyGunSound()
+    {
+        EmptySoundTimer -= Time.deltaTime;
+        if (EmptySoundTimer <= 0)
+        {
+            source.Play();
+            EmptySoundTimer = 0.3f;
+        }
+        else
+        {
+            return;
+            
+        }
+    }
+
 }

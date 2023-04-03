@@ -56,9 +56,13 @@ public class EnemyPinky : MonoBehaviour
             UpdateSprite(); // update sprite
 
         }
-        else if (isDead)
+        else if (isDead && state != AnimationState.die)
         {
             StartCoroutine(Die());
+        }
+        else
+        {
+            return;
         }
     }
     internal void MovePinky() // pinky is no longer lobotomized
