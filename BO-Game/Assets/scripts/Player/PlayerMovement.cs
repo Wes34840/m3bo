@@ -18,13 +18,17 @@ public class PlayerMovement : MonoBehaviour
     private Animator anim;
     private SpriteRenderer sprite;
     public FirePointUpdate UpdateFirePoint;
+    [SerializeField] private PlayerCombat combatScript;
 
-    [SerializeField] private float MovementSpeed = 7f;
+    [SerializeField] private float MovementSpeed = 700f;
     [SerializeField] private float JumpForce = 18f;
     private float dirX;
     private float dirY;
+    private bool isDead = false;
 
-    private enum MovementState { idle, walking, firing, crouching, crouchWalk, crouchFiring, dying }
+
+
+    private enum MovementState { idle, walking, firing, crouching, crouchWalk, crouchFiring, dying, coolerDying }
 
     // Start is called before the first frame update
     private void Start()
@@ -33,25 +37,36 @@ public class PlayerMovement : MonoBehaviour
         coll = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+        combatScript = GetComponent<PlayerCombat>();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        dirX = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(dirX * MovementSpeed, rb.velocity.y);
-        dirY = Input.GetAxisRaw("Vertical");
-
-        if (dirY > 0 && IsGrounded()) 
+        if (combatScript.health > 0)
         {
-            rb.velocity = new Vector3(rb.velocity.x, JumpForce);
+            dirX = Input.GetAxisRaw("Horizontal");
+            rb.velocity = new Vector2(dirX * MovementSpeed * Time.deltaTime, rb.velocity.y);
+            dirY = Input.GetAxisRaw("Vertical");
+
+            if (dirY > 0 && IsGrounded())
+            {
+                rb.velocity = new Vector3(rb.velocity.x, JumpForce); // jump
+            }
+            UpdateSprite(); // update sprite
         }
-
-        UpdateSprite();
-
+        else if (combatScript.health <= 0 && isDead == false)
+        {
+            Die();
+        }
+        else
+        {
+            return;
+        }
     }
     private void UpdateSprite()
     {
+
 
         MovementState state;
 
@@ -113,5 +128,20 @@ public class PlayerMovement : MonoBehaviour
     private void UpdatePointPosition() // this looks like a bad way of implementing it, but fuck it, it works for now
     {
         UpdateFirePoint.UpdatePosition(isCrouched);
+    }
+    private void Die()
+    {
+        isDead = true; // shitty way of preventing Update() from spamming the function over and over
+
+
+        if (combatScript.health < -40) // if you take enough damage, you play the cooler death animation
+        {
+            anim.SetInteger("state", (int)MovementState.coolerDying);
+        }
+        else
+        { 
+            anim.SetInteger("state", (int)MovementState.dying); // play normal death animation
+        }
+        rb.constraints = RigidbodyConstraints2D.FreezePositionX; // freeze position on x axis
     }
 }

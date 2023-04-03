@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 223200264365838276}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,10 +42,11 @@ GameObject:
   - component: {fileID: 4302469224673452403}
   - component: {fileID: 5475433097068903885}
   - component: {fileID: 5585104995759886372}
-  - component: {fileID: 3023752350113198546}
   - component: {fileID: 3601636958718275707}
   - component: {fileID: 4598179935868528740}
-  m_Layer: 0
+  - component: {fileID: 3023752350113198546}
+  - component: {fileID: 1084606515}
+  m_Layer: 7
   m_Name: EnemyPinky
   m_TagString: Pinky
   m_Icon: {fileID: 0}
@@ -140,22 +141,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3023752350113198546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4567406869977107907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92f1e59cb412f1b4faf0cf6a3f9bcc7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FirePoint: {fileID: 223200264365838276}
-  health: 100
-  Damage: 40
-  FacingRight: 1
 --- !u!50 &3601636958718275707
 Rigidbody2D:
   serializedVersion: 4
@@ -190,7 +175,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.10056804}
+  m_Offset: {x: -0.0075496137, y: -0.100568056}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -201,5 +186,35 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.7988639}
+  m_Size: {x: 0.6904796, y: 0.7988639}
   m_EdgeRadius: 0
+--- !u!114 &3023752350113198546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4567406869977107907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f1e59cb412f1b4faf0cf6a3f9bcc7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FirePoint: {fileID: 223200264365838276}
+  health: 100
+  Damage: 20
+  FacingRight: 1
+  ScuffedAILogic: {fileID: 0}
+--- !u!114 &1084606515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4567406869977107907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baca301f1dc891b40a6b19fafa89e034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}

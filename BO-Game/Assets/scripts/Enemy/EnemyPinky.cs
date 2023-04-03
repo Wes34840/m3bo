@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
@@ -17,16 +18,19 @@ public class EnemyPinky : MonoBehaviour
     private AnimationState state;
 
     public int health = 100;
-    private float MovementSpeed = 10f;
+    private float MovementSpeed = 1000f;
     public int Damage = 40;
     private bool isDead = false;
     [SerializeField] private bool FacingRight = true;
     private bool isAttacking;
+    private float dirX;
+    private float lastDir;
+    private float distanceBetween;
 
     [SerializeField] private PinkyThink ScuffedAILogic;
+    [SerializeField] private PlayerCombat player;
 
 
-    // Start is called before the first frame update
     void Start()
     {
         rb =  GetComponent<Rigidbody2D>();
@@ -37,24 +41,50 @@ public class EnemyPinky : MonoBehaviour
         {
             FacingRight = false;
         }
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerCombat>();
         ScuffedAILogic = GetComponent<PinkyThink>();
-
+        rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+        StartCoroutine(Unfreeze());
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!isDead)
         {
-            float dirX = ScuffedAILogic.PosRelativeToPlayer();
-            rb.velocity = new Vector2(dirX * MovementSpeed, rb.velocity.y); // grounded movement
+            MovePinky();
 
             UpdateSprite(); // update sprite
+
         }
         else if (isDead)
         {
             StartCoroutine(Die());
         }
+    }
+    internal void MovePinky() // pinky is no longer lobotomized
+    {
+        
+
+        distanceBetween = ScuffedAILogic.PosRelativeToPlayer(); // find distance between pinky and player
+        dirX = ScuffedAILogic.GetDirX(distanceBetween); // find what direction the player is to the pinky
+
+        if (distanceBetween > -3f && distanceBetween < 3f) // if inside proximity area
+        {
+            SnollebollekesMoment(lastDir);
+
+        }
+        else
+        {
+            rb.velocity = new Vector2(dirX * MovementSpeed * Time.deltaTime, rb.velocity.y); // walks into proximity area
+            lastDir = dirX;
+        }
+
+
+
+    }
+    private void SnollebollekesMoment(float direction)
+    {
+        rb.velocity = new Vector2(direction * MovementSpeed * Time.deltaTime, rb.velocity.y); // keep walking until out of proximity
     }
     public void TakeDamage(int damage)
     {
@@ -74,9 +104,16 @@ public class EnemyPinky : MonoBehaviour
         state = AnimationState.die; 
         anim.SetInteger("state", (int)state);  //play death animation
         rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+        Physics2D.IgnoreCollision(coll, GameObject.FindGameObjectWithTag("Player").GetComponent<Collider2D>());
+        player.score += 500;
         // corpse cannot move left or right, no general freeze because it may cause an enemy to freeze mid-air 
         yield return new WaitForSeconds(10);
         Destroy(gameObject);    
+    }
+    private IEnumerator Unfreeze()
+    {
+        yield return new WaitForSeconds(0.7f);
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation; // unfreezes the pinky but also doesn't let it flip
     }
 
     private void UpdateSprite()
@@ -129,8 +166,6 @@ public class EnemyPinky : MonoBehaviour
     {
         RaycastHit2D[] Hits =  new RaycastHit2D[2]; // only 1 object is able to be hit, array has 2 values because the raycast keeps hitting the fucking pinky
         Hits = Physics2D.RaycastAll(FirePoint.position, FirePoint.right); // shoots raycast
-
-        
 
         for (int i = 0; i < Hits.Length; i++)
         {

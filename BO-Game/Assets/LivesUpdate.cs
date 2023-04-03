@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class HealthUpdate : MonoBehaviour
+public class LivesUpdate : MonoBehaviour
 {
-
     private TMP_Text ScoreField;
-    public PlayerCombat combatScript; 
-    public int PlayerHealth;
+    public PlayerCombat combatScript;
+    public int PlayerLives;
 
     // Start is called before the first frame update
     void Start()
@@ -18,9 +17,8 @@ public class HealthUpdate : MonoBehaviour
     }
 
     void Update()
-    { 
-        PlayerHealth = combatScript.health;
-        ScoreField.text = "Health : " + PlayerHealth;
+    {
+        PlayerLives = combatScript.health;
+        ScoreField.text = "Health : " + PlayerLives;
     }
-    
 }
