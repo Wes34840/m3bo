@@ -1,5 +1,9 @@
 # m3bo Changelog, I guess
 
+## 0.0.6
+
+- you can no longer kickflip the pressure plate, sorry safwan
+
 ## 0.0.5
 
 - Fixed score so you don't get hundreds of thousands of points when killing one enemy
