@@ -27,7 +27,9 @@ public class PlayerMovement : MonoBehaviour
     private bool isDead = false;
     private float EmptySoundTimer = 0.3f;
 
-    private AudioSource source;
+    public AudioSource source;
+    public AudioClip Shoot, Empty, Hurt, Dying, CoolerDying;
+
 
     private enum MovementState { idle, walking, firing, crouching, crouchWalk, crouchFiring, dying, coolerDying }
 
@@ -152,10 +154,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (combatScript.health < -40) // if you take enough damage, you play the cooler death animation
         {
+            source.clip = CoolerDying; // self-explanetory
+            source.Play();
             anim.SetInteger("state", (int)MovementState.coolerDying);
         }
         else
-        { 
+        {
+            source.clip = Dying;
+            source.Play();
             anim.SetInteger("state", (int)MovementState.dying); // play normal death animation
         }
         rb.constraints = RigidbodyConstraints2D.FreezePositionX; // freeze position on x axis
@@ -166,13 +172,13 @@ public class PlayerMovement : MonoBehaviour
         EmptySoundTimer -= Time.deltaTime;
         if (EmptySoundTimer <= 0)
         {
+            source.clip = Empty;
             source.Play();
             EmptySoundTimer = 0.3f;
         }
         else
         {
             return;
-            
         }
     }
 

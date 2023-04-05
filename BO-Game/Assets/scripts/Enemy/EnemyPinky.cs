@@ -23,12 +23,13 @@ public class EnemyPinky : MonoBehaviour
     private bool isDead = false;
     [SerializeField] private bool FacingRight = true;
     private bool isAttacking;
-    private float dirX;
-    private float lastDir;
-    private float distanceBetween;
+    private float dirX, lastDir, distanceBetween;
 
     [SerializeField] private PinkyThink ScuffedAILogic;
     [SerializeField] private PlayerCombat player;
+
+    private AudioSource source;
+    public AudioClip Attack, Hurt, Dying; // start audio clips
 
 
     void Start()
@@ -37,12 +38,16 @@ public class EnemyPinky : MonoBehaviour
         coll = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+
         if (FirePoint.position.x < rb.position.x)
         {
             FacingRight = false;
         }
+
         player = GameObject.FindWithTag("Player").GetComponent<PlayerCombat>();
         ScuffedAILogic = GetComponent<PinkyThink>();
+        source = GetComponent<AudioSource>();
+
         rb.constraints = RigidbodyConstraints2D.FreezePositionX;
         StartCoroutine(Unfreeze());
     }
@@ -82,10 +87,8 @@ public class EnemyPinky : MonoBehaviour
             rb.velocity = new Vector2(dirX * MovementSpeed * Time.deltaTime, rb.velocity.y); // walks into proximity area
             lastDir = dirX;
         }
-
-
-
     }
+
     private void SnollebollekesMoment(float direction)
     {
         rb.velocity = new Vector2(direction * MovementSpeed * Time.deltaTime, rb.velocity.y); // keep walking until out of proximity
@@ -95,16 +98,25 @@ public class EnemyPinky : MonoBehaviour
         health -= damage; // take damage
 
         rb.velocity = new Vector2(0, rb.velocity.y); // knockback (not implemented correctly l o  l), for now freezes enemy in place when hit
+
         
 
         if (health <= 0)
         {
             isDead = true;
         }
+        else
+        {
+            source.clip = Hurt; // play hurt sound
+            source.Play();
+        }
     }
 
     private IEnumerator Die()
     {
+        source.clip = Dying; // play dying sound
+        source.Play();
+
         state = AnimationState.die; 
         anim.SetInteger("state", (int)state);  //play death animation
         rb.constraints = RigidbodyConstraints2D.FreezePositionX;
@@ -163,6 +175,8 @@ public class EnemyPinky : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
             isAttacking= true;
+            source.clip = Attack;
+            source.Play();
         }
     }
 

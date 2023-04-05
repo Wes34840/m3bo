@@ -1,8 +1,23 @@
 # m3bo Changelog, I guess
 
+## 0.0.7
+
+- Added sounds to the following things:
+  - Player
+    - Shooting
+    - Having an empty magazine
+    - Taking damage
+    - Dying
+    - Cooler dying
+  - Enemy
+    - Attacking
+    - Taking damage
+    - Dying
+- Added background music to main menu and level 1
+
 ## 0.0.6
 
-- you can no longer kickflip the pressure plate, sorry safwan
+- You can no longer kickflip the pressure plate, sorry safwan
 
 ## 0.0.5
 
@@ -21,4 +36,4 @@
 
 ## 0.0.3
 
-- tbh, this is the earliest version I pushed to github.
+- Tbh, this is the earliest version I pushed to github.

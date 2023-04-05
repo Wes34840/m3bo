@@ -14,9 +14,19 @@ public class PlayerCombat: MonoBehaviour
     public HealthUpdate healthUpdate;
     public int ammo = 30;
     public int score = 0;
-    
+
+    public PlayerMovement player;
+
+    private void Start()
+    {
+        player= GetComponent<PlayerMovement>();
+    }
+
     private void Shoot() // Shooting logic
     {
+        player.source.clip = player.Shoot;
+        player.source.Play();
+
         RaycastHit2D Hit = Physics2D.Raycast(firePoint.position, firePoint.right); // shoot raycast through the object called firepoint
 
         if (Hit.collider.CompareTag("Pinky")) // check if it hits an enemy through the use of tags
@@ -34,8 +44,15 @@ public class PlayerCombat: MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        health -= damage;
-
-        
+        if (health > 0)
+        {
+            health -= damage;
+            player.source.clip = player.Hurt;
+            player.source.Play();
+        }
+        else
+        {
+            return;
+        }
     }
 }
