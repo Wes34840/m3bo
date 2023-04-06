@@ -120,7 +120,8 @@ public class EnemyPinky : MonoBehaviour
         state = AnimationState.die; 
         anim.SetInteger("state", (int)state);  //play death animation
         rb.constraints = RigidbodyConstraints2D.FreezePositionX;
-        Physics2D.IgnoreCollision(coll, GameObject.FindGameObjectWithTag("Player").GetComponent<Collider2D>());
+        rb.gravityScale = 0;
+        Destroy(coll);
         player.score += 500;
         // corpse cannot move left or right, no general freeze because it may cause an enemy to freeze mid-air 
         yield return new WaitForSeconds(10);

@@ -1,5 +1,10 @@
 # m3bo Changelog, I guess
 
+## 0.0.8
+
+- Added like 5 extra enemies to the map
+- Changed volume so the enemies don't give you tinnitus
+
 ## 0.0.7
 
 - Added sounds to the following things:
