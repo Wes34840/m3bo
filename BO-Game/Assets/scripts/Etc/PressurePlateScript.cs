@@ -8,7 +8,7 @@ public class PressurePlateScript : MonoBehaviour
     private Collider2D coll;
     private Rigidbody2D rb;
 
-    private GameObject door;
+    public GameObject door;
     private Collider2D floor;
 
     private GameObject destroyThis;
@@ -18,8 +18,6 @@ public class PressurePlateScript : MonoBehaviour
     {
         coll = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
-
-        door = GameObject.FindWithTag("Door");
         floor = GameObject.Find("Floor").GetComponent<Collider2D>();
 
         Physics2D.IgnoreCollision(coll, floor);

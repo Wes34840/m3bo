@@ -1,5 +1,11 @@
 # m3bo Changelog, I guess
 
+
+## 0.0.9
+
+- enemies now need line of sight or the player to be close enough to wake up
+- movement is now no longer dependant on framerate because my dumb ass found out rb.velocity was already framerate indepenant and Time.deltaTime was the thing that was causing issues (only took me like a month)
+
 ## 0.0.8
 
 - Added like 5 extra enemies to the map

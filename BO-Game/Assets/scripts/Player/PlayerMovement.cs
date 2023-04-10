@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public FirePointUpdate UpdateFirePoint;
     [SerializeField] private PlayerCombat combatScript;
 
-    [SerializeField] private float MovementSpeed = 700f;
+    [SerializeField] private float MovementSpeed = 6f;
     [SerializeField] private float JumpForce = 18f;
     private float dirX;
     private float dirY;
@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         if (combatScript.health > 0)
         {
             dirX = Input.GetAxisRaw("Horizontal");
-            rb.velocity = new Vector2(dirX * MovementSpeed * Time.deltaTime, rb.velocity.y);
+            rb.velocity = new Vector2(dirX * MovementSpeed, rb.velocity.y);
             dirY = Input.GetAxisRaw("Vertical");
 
             if (dirY > 0 && IsGrounded())

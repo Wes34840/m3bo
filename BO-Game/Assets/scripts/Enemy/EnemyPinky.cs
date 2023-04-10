@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Unity.Burst.CompilerServices;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,11 +19,11 @@ public class EnemyPinky : MonoBehaviour
     private AnimationState state;
 
     public int health = 100;
-    private float MovementSpeed = 1000f;
+    private float MovementSpeed = 7f;
     public int Damage = 40;
     private bool isDead = false;
     [SerializeField] private bool FacingRight = true;
-    private bool isAttacking;
+    private bool isAttacking, hasAwoken;
     private float dirX, lastDir, distanceBetween;
 
     [SerializeField] private PinkyThink ScuffedAILogic;
@@ -48,12 +49,23 @@ public class EnemyPinky : MonoBehaviour
         ScuffedAILogic = GetComponent<PinkyThink>();
         source = GetComponent<AudioSource>();
 
-        rb.constraints = RigidbodyConstraints2D.FreezePositionX;
-        StartCoroutine(Unfreeze());
+        rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
     }
 
     void Update()
     {
+        if (rb.constraints != RigidbodyConstraints2D.FreezeRotation) // if asleep
+        {
+            if (ScuffedAILogic.PlayerIsVisible(FacingRight) == true) // if can see 
+            {
+                WakeUp();
+            }
+            else // if cannot see
+            {
+                return; // retry
+            }
+        }
+
         if (!isDead)
         {
             MovePinky();
@@ -76,6 +88,7 @@ public class EnemyPinky : MonoBehaviour
 
         distanceBetween = ScuffedAILogic.PosRelativeToPlayer(); // find distance between pinky and player
         dirX = ScuffedAILogic.GetDirX(distanceBetween); // find what direction the player is to the pinky
+        
 
         if (distanceBetween > -3f && distanceBetween < 3f) // if inside proximity area
         {
@@ -84,14 +97,32 @@ public class EnemyPinky : MonoBehaviour
         }
         else
         {
-            rb.velocity = new Vector2(dirX * MovementSpeed * Time.deltaTime, rb.velocity.y); // walks into proximity area
+            rb.velocity = new Vector2(dirX * MovementSpeed, rb.velocity.y); // walks into proximity area
             lastDir = dirX;
         }
     }
 
     private void SnollebollekesMoment(float direction)
+    { 
+        if (direction == 0 && !hasAwoken)
+        {
+            Debug.Log("get intitial");
+            direction = GetInitialDirection();
+            lastDir = direction;
+            hasAwoken = true;
+        }
+        rb.velocity = new Vector2(direction * MovementSpeed, rb.velocity.y); // keep walking until out of proximity
+    }
+    private float GetInitialDirection()
     {
-        rb.velocity = new Vector2(direction * MovementSpeed * Time.deltaTime, rb.velocity.y); // keep walking until out of proximity
+        if (GameObject.Find("Player").transform.position.x < transform.position.x)
+        {
+            return -1;
+        }
+        else
+        {
+            return 1;
+        }
     }
     public void TakeDamage(int damage)
     {
@@ -99,7 +130,10 @@ public class EnemyPinky : MonoBehaviour
 
         rb.velocity = new Vector2(0, rb.velocity.y); // knockback (not implemented correctly l o  l), for now freezes enemy in place when hit
 
-        
+        if (rb.constraints != RigidbodyConstraints2D.FreezeRotation)
+        {
+            WakeUp();
+        }
 
         if (health <= 0)
         {
@@ -127,9 +161,8 @@ public class EnemyPinky : MonoBehaviour
         yield return new WaitForSeconds(10);
         Destroy(gameObject);    
     }
-    private IEnumerator Unfreeze()
+    private void WakeUp()
     {
-        yield return new WaitForSeconds(0.7f);
         rb.constraints = RigidbodyConstraints2D.FreezeRotation; // unfreezes the pinky but also doesn't let it flip
     }
 
