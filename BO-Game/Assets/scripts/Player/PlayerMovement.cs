@@ -26,10 +26,13 @@ public class PlayerMovement : MonoBehaviour
     private float dirY;
     private bool isDead = false;
     private float EmptySoundTimer = 0.3f;
+    public bool HasKeyRed = false;
+
 
     public AudioSource source;
     public AudioClip Shoot, Empty, Hurt, Dying, CoolerDying;
 
+    public GameObject DeathScreen;
 
     private enum MovementState { idle, walking, firing, crouching, crouchWalk, crouchFiring, dying, coolerDying }
 
@@ -57,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.velocity = new Vector3(rb.velocity.x, JumpForce); // jump
             }
+
             UpdateSprite(); // update sprite
         }
         else if (combatScript.health <= 0 && isDead == false)

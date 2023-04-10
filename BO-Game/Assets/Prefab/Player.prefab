@@ -222,7 +222,7 @@ MonoBehaviour:
   UpdateFirePoint: {fileID: 391384298082880655}
   combatScript: {fileID: 0}
   MovementSpeed: 750
-  JumpForce: 15
+  JumpForce: 18
   source: {fileID: 0}
   Shoot: {fileID: 8300000, guid: 9df0ef23e0971e847b5007c9f4e25675, type: 3}
   Empty: {fileID: 8300000, guid: caf8ad6d9eaac1444a31a71638697c3d, type: 3}

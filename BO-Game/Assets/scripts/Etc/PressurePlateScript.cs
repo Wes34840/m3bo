@@ -31,7 +31,7 @@ public class PressurePlateScript : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision) // when player stand on button
     {
         if (collision.gameObject.CompareTag("Player"))
-            {
+        {
             rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation; // removes freeze on Y axis but keeps freeze on X position. making it go through the floor
 
             door.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation; ; ; // same as with the door
@@ -43,5 +43,5 @@ public class PressurePlateScript : MonoBehaviour
             Physics2D.IgnoreCollision(coll, collision.collider);
         }
     }
-    
+
 }

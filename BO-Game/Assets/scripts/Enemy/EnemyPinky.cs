@@ -106,7 +106,6 @@ public class EnemyPinky : MonoBehaviour
     { 
         if (direction == 0 && !hasAwoken)
         {
-            Debug.Log("get intitial");
             direction = GetInitialDirection();
             lastDir = direction;
             hasAwoken = true;
@@ -221,8 +220,6 @@ public class EnemyPinky : MonoBehaviour
 
         for (int i = 0; i < Hits.Length; i++)
         {
-            Debug.Log(Hits[i]);
-
             if (Hits[i].collider.CompareTag("Player") && Hits[i].distance <= 0.5f) // checks if player is hit and in range
             {
 

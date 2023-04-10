@@ -1,6 +1,28 @@
 # m3bo Changelog, I guess
 
 
+## 0.1
+
+- additions:
+  - Building with doors
+  - Better sprites for doors
+  - Sickass interior design
+  - Doors that require keycard
+  - Collectible keycard
+  - End screen
+  - Pause screen
+  - Death screen
+  - More music
+  - Some other shit I forgot
+
+- Changes
+  - Fucked around with camera so it can be fixed at certain points, probably won't use aside from building exploration
+  - Stopped trying to be as professional in changelogs
+  - Made player able to jump higher
+  - Better floating platform
+
+- the amount of headaches and time I put into this probably qualifies it to be a version with a different decimal number
+
 ## 0.0.9
 
 - enemies now need line of sight or the player to be close enough to wake up
