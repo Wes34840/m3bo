@@ -1,5 +1,13 @@
 # m3bo Changelog, I guess
 
+## 0.2.1
+
+- Added a medpack pickup, heals 50 health
+- Added medpack to Endless shop
+- Implemented max ammo and health stats
+- Added max ammo and health to Endless upgrade menu
+- Did a little organising with scripts
+
 ## 0.2
 
 - Endless mode, cause I got a random spur of motivation to create something
@@ -15,7 +23,7 @@
     - Planned
       - Probably health in the future
   - Upgrade Menu
-
+    - Purchasable
       - Damage
     
     - Planned

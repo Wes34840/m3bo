@@ -4983,6 +4983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ffcd8293a379d48bb06c5577622f33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: Ammo
 --- !u!198 &8865878648426006812
 ParticleSystem:
   m_ObjectHideFlags: 0

@@ -6,13 +6,14 @@ using UnityEngine;
 
 public class PlayerCombat: MonoBehaviour
 {
-    public int health = 200;
+    public int health, MaxHealth = 200;
     public Transform firePoint;
     public int damage = 40;
     public GameObject impactEffectBlood;
     public GameObject impactEffectSpark;
     public HealthUpdate healthUpdate;
     public int ammo = 30;
+    public int MaxAmmo = 200;
     public int score = 0;
 
     public PlayerMovement player;

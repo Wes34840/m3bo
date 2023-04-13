@@ -17,7 +17,7 @@ public class AmmoUpdate : MonoBehaviour
     }
 
     void Update()
-    {
+    { 
         PlayerAmmo = combatScript.ammo;
         ScoreField.text = "Ammo : " + PlayerAmmo;
     }
