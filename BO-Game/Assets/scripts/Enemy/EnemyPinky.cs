@@ -18,7 +18,7 @@ public class EnemyPinky : MonoBehaviour
     private enum AnimationState { idle, walking, bite, die }
     private AnimationState state;
 
-    public int health = 100;
+    public int health = 200;
     private float MovementSpeed = 7f;
     public int Damage = 40;
     private bool isDead = false;
@@ -114,7 +114,7 @@ public class EnemyPinky : MonoBehaviour
     }
     private float GetInitialDirection()
     {
-        if (GameObject.Find("Player").transform.position.x < transform.position.x)
+        if (GameObject.FindGameObjectWithTag("Player").transform.position.x < transform.position.x)
         {
             return -1;
         }

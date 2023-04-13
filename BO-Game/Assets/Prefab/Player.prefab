@@ -221,14 +221,16 @@ MonoBehaviour:
   isCrouched: 0
   UpdateFirePoint: {fileID: 391384298082880655}
   combatScript: {fileID: 0}
-  MovementSpeed: 750
+  MovementSpeed: 6
   JumpForce: 18
+  HasKeyRed: 0
   source: {fileID: 0}
   Shoot: {fileID: 8300000, guid: 9df0ef23e0971e847b5007c9f4e25675, type: 3}
   Empty: {fileID: 8300000, guid: caf8ad6d9eaac1444a31a71638697c3d, type: 3}
   Hurt: {fileID: 8300000, guid: 120102af9dec2074db1889e63e621169, type: 3}
   Dying: {fileID: 8300000, guid: 72d2393f62865e942bc4759dd598271c, type: 3}
   CoolerDying: {fileID: 8300000, guid: 81da3ae1d36237c40a12c59bd4c2bf9f, type: 3}
+  DeathScreen: {fileID: 0}
 --- !u!114 &391384298480832693
 MonoBehaviour:
   m_ObjectHideFlags: 0

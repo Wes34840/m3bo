@@ -1,5 +1,28 @@
 # m3bo Changelog, I guess
 
+## 0.2
+
+- Endless mode, cause I got a random spur of motivation to create something
+- Functions:
+  - Waves, spawns 10 enemies at wave 1 and keeps increasing enemy limit every wave
+  - Camera follows player around, very crudely but it works for now
+  - Money
+  - Wave counters
+  - Shop
+    - Purchasable
+      - Ammo
+
+    - Planned
+      - Probably health in the future
+  - Upgrade Menu
+
+      - Damage
+    
+    - Planned
+      - Total Ammo
+      - Total Health
+      - Damage Resistance
+- Endscreen will be added in next update, maybe other upgrades as well
 
 ## 0.1
 
