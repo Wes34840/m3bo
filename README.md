@@ -1,5 +1,9 @@
 # m3bo Changelog, I guess
 
+## 0.2.2
+
+- Minor changes so game works as intended
+
 ## 0.2.1
 
 - Added a medpack pickup, heals 50 health
