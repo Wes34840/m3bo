@@ -1,5 +1,10 @@
 # m3bo Changelog, I guess
 
+## Notes for Refactor
+
+### Player prefab had a script called playermovement, it handled the movement of the player. But also handled the audio and sprites of the player, this is no good.
+### I made 2 new scripts that take the sprite and audio responsibilities away from the movementscript respectfully.
+
 ## 0.2.2
 
 - Minor changes so game works as intended
