@@ -17,16 +17,17 @@ public class PlayerCombat: MonoBehaviour
     public int score = 0;
 
     public PlayerMovement player;
+    internal PlayerAudioPlayer playerAudioPlayer;
 
     private void Start()
     {
         player= GetComponent<PlayerMovement>();
+        playerAudioPlayer = GetComponent<PlayerAudioPlayer>();
     }
 
     private void Shoot() // Shooting logic
     {
-        player.source.clip = player.Shoot;
-        player.source.Play();
+        playerAudioPlayer.PlayAudio(AudioClips.Shoot);
 
         RaycastHit2D Hit = Physics2D.Raycast(firePoint.position, firePoint.right); // shoot raycast through the object called firepoint
 
@@ -48,8 +49,7 @@ public class PlayerCombat: MonoBehaviour
         if (health > 0)
         {
             health -= damage;
-            player.source.clip = player.Hurt;
-            player.source.Play();
+            playerAudioPlayer.PlayAudio(AudioClips.Hurt);
         }
         else
         {

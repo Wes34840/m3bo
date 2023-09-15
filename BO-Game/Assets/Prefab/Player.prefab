@@ -54,12 +54,14 @@ GameObject:
   m_Component:
   - component: {fileID: 391384298480832714}
   - component: {fileID: 391384298480832715}
+  - component: {fileID: 6810379761332712546}
   - component: {fileID: 391384298480832719}
   - component: {fileID: 391384298480832718}
   - component: {fileID: 391384298480832692}
   - component: {fileID: 391384298480832717}
   - component: {fileID: 391384298480832693}
   - component: {fileID: 391384298480832694}
+  - component: {fileID: 645852538278037596}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -135,6 +137,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6810379761332712546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391384298480832716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca029c8eda438a14b9010da6a59d7e94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &391384298480832719
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -224,12 +238,6 @@ MonoBehaviour:
   MovementSpeed: 6
   JumpForce: 18
   HasKeyRed: 0
-  source: {fileID: 0}
-  Shoot: {fileID: 8300000, guid: 9df0ef23e0971e847b5007c9f4e25675, type: 3}
-  Empty: {fileID: 8300000, guid: caf8ad6d9eaac1444a31a71638697c3d, type: 3}
-  Hurt: {fileID: 8300000, guid: 120102af9dec2074db1889e63e621169, type: 3}
-  Dying: {fileID: 8300000, guid: 72d2393f62865e942bc4759dd598271c, type: 3}
-  CoolerDying: {fileID: 8300000, guid: 81da3ae1d36237c40a12c59bd4c2bf9f, type: 3}
   DeathScreen: {fileID: 0}
 --- !u!114 &391384298480832693
 MonoBehaviour:
@@ -244,12 +252,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 200
+  MaxHealth: 200
   firePoint: {fileID: 391384298082880654}
   damage: 40
   impactEffectBlood: {fileID: 3920314265607121401, guid: 0a4a2e6883f83714da50caa63e64fbde, type: 3}
   impactEffectSpark: {fileID: 4205222676717331380, guid: 1f92a512eeff767418722ba0e5c6b2c0, type: 3}
   healthUpdate: {fileID: 0}
   ammo: 30
+  MaxAmmo: 200
   score: 0
   player: {fileID: 0}
 --- !u!82 &391384298480832694
@@ -348,3 +358,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &645852538278037596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391384298480832716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095dff46e6e19a64bb4593f386c6b28e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClips:
+  - {fileID: 8300000, guid: 9df0ef23e0971e847b5007c9f4e25675, type: 3}
+  - {fileID: 8300000, guid: caf8ad6d9eaac1444a31a71638697c3d, type: 3}
+  - {fileID: 8300000, guid: 120102af9dec2074db1889e63e621169, type: 3}
+  - {fileID: 8300000, guid: 72d2393f62865e942bc4759dd598271c, type: 3}
+  - {fileID: 8300000, guid: 81da3ae1d36237c40a12c59bd4c2bf9f, type: 3}
